@@ -28,7 +28,7 @@ function handleSendMessage() {
     console.log(userMessage);
     userInput.value = "";
 
-    fetch("http://localhost:1880/sexo", {
+    fetch("http://192.168.2.149:1880/chat", {
       method: "POST",
       body: JSON.stringify(userMessage),
     })
