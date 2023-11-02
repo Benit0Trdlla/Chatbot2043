@@ -30,15 +30,16 @@ function processUserInput() {
 	addUserMessage(message);
 	userInput.value = '';
 
-	const formData = new FormData();
-	formData.append('userInput', message);
+	// const formData = new FormData();
+	// formData.append('userInput', message);
 
-	fetch("http://192.168.2.149:1880/chat", {
+	fetch("http://192.168.2.172:1880/chat", {
 		method: 'POST',
-		body: formData
+		body: message
 	})
 		.then(response => response.json())
 		.then(data => {
+			console.log(data)
 			const botMessage = data.botMessage;
 			addBotMessage(botMessage);
 		})
