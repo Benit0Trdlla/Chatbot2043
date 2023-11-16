@@ -24,7 +24,7 @@ addBotMessage(botText1);
 function processUserInput() {
 	const message = userInput.value.trim();
 	if (message === '') {
-		return; 
+		return;
 	}
 
 	addUserMessage(message);
@@ -33,24 +33,33 @@ function processUserInput() {
 	// const formData = new FormData();
 	// formData.append('userInput', message);
 
-	fetch("http://192.168.2.172:1880/chat", {
-		method: 'POST',
-		body: message
-	})
-		.then(response => response.json())
-		.then(data => {
-			console.log(data)
+	async function fetchData() {
+		const contenedorCarga = document.getElementById('contenedor_carga');
+		contenedorCarga.classList.add('mostrar');
+
+		try {
+			const response = await fetch("http://192.168.2.172:1880/chat", {
+				method: 'POST',
+				body: message
+			});
+
+			const data = await response.json();
+			console.log(data);
 			const botMessage = data.botMessage;
 			addBotMessage(botMessage);
-		})
-		.catch(error => {
+		} catch (error) {
 			console.error('Error:', error);
-		});
+		}
+
+		contenedorCarga.classList.remove('mostrar');
+	}
+
+	fetchData();
 }
 
 userInput.addEventListener('keydown', (event) => {
 	if (event.keyCode === 13) {
-		event.preventDefault(); 
+		event.preventDefault();
 		processUserInput();
 		document.getElementById("user-input").value = '';
 	}
