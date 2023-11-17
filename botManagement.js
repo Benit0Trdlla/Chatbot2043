@@ -35,14 +35,15 @@ function processUserInput() {
 
 	async function fetchData() {
 		const contenedorCarga = document.getElementById('contenedor_carga');
-		contenedorCarga.classList.add('mostrar');
-
+		
+		contenedorCarga.classList.remove('mostrar'); // Mover esta línea aquí para mostrar la animación
+	
 		try {
-			const response = await fetch("http://192.168.2.172:1880/chat", {
+			const response = await fetch("http://192.168.2.150:1880/chat", {
 				method: 'POST',
 				body: message
 			});
-
+	
 			const data = await response.json();
 			console.log(data);
 			const botMessage = data.botMessage;
@@ -50,8 +51,8 @@ function processUserInput() {
 		} catch (error) {
 			console.error('Error:', error);
 		}
-
-		contenedorCarga.classList.remove('mostrar');
+	
+		contenedorCarga.classList.add('mostrar'); // Mantener esta línea para ocultar la animación después de recibir la respuesta
 	}
 
 	fetchData();
